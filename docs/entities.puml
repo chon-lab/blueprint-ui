@@ -1,0 +1,197 @@
+@startuml
+title diagrama entidade-relacionamento - ods e ações
+
+hide circle
+skinparam linetype ortho
+skinparam nodesep 180
+skinparam ranksep 50
+
+package "blueprint" {
+
+  entity "ods" as ods {
+    id : uuid <<pk>>
+    code : int
+    title : varchar
+    official_color_hex : varchar
+    description : text
+  }
+
+  entity "ods_target" as ods_target {
+    id : uuid <<pk>>
+    ods_id : uuid <<fk>>
+    ods_target_type_id : uuid <<fk>>
+    code : varchar
+    description : text
+  }
+
+  entity "ods_target_type" as ods_target_type {
+    id : uuid <<pk>>
+    name : varchar
+    description : text
+  }
+
+  entity "action" as action {
+    id : uuid <<pk>>
+    action_type_id : uuid <<fk>>
+    title : varchar
+    description : text
+  }
+
+  entity "action_type" as action_type {
+    id : uuid <<pk>>
+    name : varchar
+    description : text
+  }
+
+  entity "product" as product {
+    id : uuid <<pk>>
+    action_id : uuid <<fk>>
+    product_status_id : uuid <<fk>>
+    name : varchar
+    description : text
+    start_date : date
+    end_date : date
+  }
+
+  entity "product_status" as product_status {
+    id : uuid <<pk>>
+    name : varchar
+    description : text
+  }
+
+  entity "generated_impact" as generated_impact {
+    id : uuid <<pk>>
+    action_id : uuid <<fk>>
+    title : varchar
+  }
+
+  entity "generated_impact_topic" as generated_impact_topic {
+    id : uuid <<pk>>
+    generated_impact_id : uuid <<fk>>
+    content : varchar
+  }
+
+  entity "entity" as entity {
+    id : uuid <<pk>>
+    entity_type_id : uuid <<fk>>
+    country_id : uuid <<fk>>
+    state_id : uuid <<fk>>
+    city_id : uuid <<fk>>
+    name : varchar
+    description : text
+  }
+
+  entity "entity_type" as entity_type {
+    id : uuid <<pk>>
+    name : varchar
+    description : text
+  }
+
+  entity "action_ods_target" as action_ods_target {
+    id : uuid <<pk>>
+    action_id : uuid <<fk>>
+    ods_target_id : uuid <<fk>>
+    justification : text
+  }
+
+  entity "entity_action" as entity_action {
+    id : uuid <<pk>>
+    entity_id : uuid <<fk>>
+    action_id : uuid <<fk>>
+    action_role_id : uuid <<fk>>
+  }
+
+  entity "action_role" as action_role {
+    id : uuid <<pk>>
+    name : varchar
+    description : text
+  }
+
+  note top of ods_target_type
+  - RESULT_ODS_TARGET
+  - MEANS_OF_IMPLEMENTATION
+  end note
+
+  note top of product_status
+  - IN_PROGRESS
+  - COMPLETED
+  - CANCELLED
+  end note
+
+  note top of entity_type
+  - MUNICIPALITY
+  - NGO
+  - AGENCY
+  - HOTEL
+  - COMPANY
+  - OTHER
+  end note
+
+  note top of action_role
+  - OWNER
+  - CONTRIBUTING_PARTNER
+  - IMPLEMENTATION_PARTNER
+  end note
+
+  note top of action_type
+  - DIRECTLY_IMPACTS
+  - INDIRECTLY_IMPACTS
+  - FOUNDATIONAL_ACTION
+  end note
+
+}
+
+package "address" {
+
+  entity "country" as country {
+    id : uuid <<pk>>
+  }
+
+  entity "region" as region {
+    id : uuid <<pk>>
+    country_id : uuid <<fk>>
+  }
+
+  entity "state" as state {
+    id : uuid <<pk>>
+    region_id : uuid <<fk>>
+  }
+
+  entity "city" as city {
+    id : uuid <<pk>>
+    state_id : uuid <<fk>>
+    country_id : uuid <<fk>>
+  }
+
+}
+
+ods ||--o{ ods_target : has
+ods_target_type ||--o{ ods_target : classifies
+
+action_type ||--|| action : classifies
+
+action ||--o{ product : has
+product_status ||--o{ product : classifies
+
+action ||--o{ generated_impact : generates
+generated_impact ||--o{ generated_impact_topic : has
+
+entity_type ||--o{ entity : classifies
+
+action ||--o{ action_ods_target : has
+ods_target ||--o{ action_ods_target : references
+
+entity ||--o{ entity_action : participates
+action ||--o{ entity_action : has_participant
+action_role ||--o{ entity_action : defines_role
+
+country ||--o{ region : has
+region ||--o{ state : has
+state ||--o{ city : has
+country ||--o{ city : has
+
+country ||--o{ entity : references
+state ||--o{ entity : references
+city ||--o{ entity : references
+
+@enduml
