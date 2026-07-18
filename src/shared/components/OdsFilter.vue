@@ -49,24 +49,24 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="relative flex min-w-0 items-center gap-2.5">
+  <div ref="root" class="ods-filter relative flex items-center">
     <button
       type="button"
-      class="inline-flex h-[var(--bp-input-height-md)] shrink-0 items-center gap-3 rounded-md border border-border bg-surface px-3 text-sm text-foreground outline-none transition-colors hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)]"
+      class="ods-filter__trigger inline-flex items-center"
       :aria-expanded="isOpen"
       aria-haspopup="listbox"
       @click="isOpen = !isOpen"
     >
       <span>{{ label }}</span>
-      <Icon :name="isOpen ? 'chevron-down' : 'plus'" :size="17" :class="isOpen && 'rotate-180'" />
+      <Icon :name="isOpen ? 'chevron-down' : 'plus'" :size="17" :class="isOpen && '--open'" />
     </button>
 
-    <div class="flex min-w-0 items-center gap-2 overflow-x-auto py-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div class="ods-filter__selection flex items-center overflow-x-auto">
       <button
         v-for="ods in selectedOptions"
         :key="ods.code"
         type="button"
-        class="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-full px-3 text-xs outline-none transition-opacity hover:opacity-75 focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)]"
+        class="ods-filter__chip inline-flex items-center"
         :style="{ backgroundColor: ods.softColor, color: ods.color }"
         :aria-label="`Remover ODS ${ods.code}: ${ods.title}`"
         @click="toggle(ods.code)"
@@ -78,32 +78,92 @@ onBeforeUnmount(() => {
 
     <div
       v-if="isOpen"
-      class="absolute left-0 top-[calc(100%+0.5rem)] z-50 w-[min(24rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-border bg-surface shadow-lg"
+      class="ods-filter__dropdown absolute overflow-hidden"
     >
-      <div class="border-b border-border-muted px-4 py-3">
-        <p class="text-sm font-medium text-foreground">Selecionar ODS</p>
-        <p class="mt-0.5 text-xs text-muted">Clique para adicionar ou remover da pesquisa.</p>
+      <div class="ods-filter__dropdown-header">
+        <p class="ods-filter__dropdown-title">Selecionar ODS</p>
+        <p class="ods-filter__dropdown-description">Clique para adicionar ou remover da pesquisa.</p>
       </div>
-      <div class="max-h-[min(22rem,45dvh)] overflow-y-auto p-2" role="listbox" aria-multiselectable="true">
+      <div class="ods-filter__options overflow-y-auto" role="listbox" aria-multiselectable="true">
         <button
           v-for="ods in options"
           :key="ods.code"
           type="button"
           role="option"
           :aria-selected="modelValue.includes(ods.code)"
-          class="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left text-sm outline-none hover:bg-surface-muted focus-visible:bg-primary-50"
+          class="ods-filter__option flex items-center"
           @click="toggle(ods.code)"
         >
           <span
-            class="flex size-7 shrink-0 items-center justify-center rounded-sm text-xs font-semibold text-white"
+            class="ods-filter__option-code flex items-center justify-center"
             :style="{ backgroundColor: ods.color }"
           >
             {{ ods.code }}
           </span>
-          <span class="min-w-0 flex-1 truncate text-foreground">{{ ods.title }}</span>
-          <Icon v-if="modelValue.includes(ods.code)" name="check" :size="17" class="shrink-0 text-primary" />
+          <span class="ods-filter__option-title">{{ ods.title }}</span>
+          <Icon v-if="modelValue.includes(ods.code)" name="check" :size="17" class="ods-filter__option-check" />
         </button>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.ods-filter {
+  @apply min-w-0 gap-2.5;
+}
+
+.ods-filter__trigger {
+  @apply h-[var(--bp-input-height-md)] shrink-0 gap-3 rounded-md border border-border bg-surface px-3 text-sm text-foreground outline-none transition-colors hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+}
+
+.ods-filter__trigger .--open {
+  @apply rotate-180;
+}
+
+.ods-filter__selection {
+  @apply min-w-0 gap-2 py-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+.ods-filter__chip {
+  @apply h-7 shrink-0 gap-1.5 rounded-full px-3 text-xs outline-none transition-opacity hover:opacity-75 focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+}
+
+.ods-filter__dropdown {
+  @apply left-0 top-[calc(100%+0.5rem)] z-50 w-[min(24rem,calc(100vw-2rem))] rounded-lg border border-border bg-surface shadow-lg;
+}
+
+.ods-filter__dropdown-header {
+  @apply border-b border-border-muted px-4 py-3;
+}
+
+.ods-filter__dropdown-title {
+  @apply text-sm font-medium text-foreground;
+}
+
+.ods-filter__dropdown-description {
+  @apply mt-0.5 text-xs text-muted;
+}
+
+.ods-filter__options {
+  @apply max-h-[min(22rem,45dvh)] p-2;
+}
+
+.ods-filter__option {
+  @apply w-full gap-3 rounded-md px-2 py-2 text-left text-sm outline-none hover:bg-surface-muted focus-visible:bg-primary-50;
+}
+
+.ods-filter__option-code {
+  @apply size-7 shrink-0 rounded-sm text-xs font-semibold text-white;
+}
+
+.ods-filter__option-title {
+  @apply min-w-0 flex-1 truncate text-foreground;
+}
+
+.ods-filter__option-check {
+  @apply shrink-0 text-primary;
+}
+</style>

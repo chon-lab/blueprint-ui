@@ -14,34 +14,70 @@ router.afterEach(() => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-40 border-b border-border-muted bg-surface/95 backdrop-blur lg:hidden">
-    <div class="flex h-16 items-center justify-between px-4">
-      <RouterLink :to="{ name: 'home' }" class="flex items-center gap-2.5">
-        <img :src="logoUrl" alt="" class="size-6" />
-        <span class="text-xl font-semibold text-foreground">Blueprint</span>
+  <header class="mobile-header sticky lg:hidden">
+    <div class="mobile-header__bar flex items-center justify-between">
+      <RouterLink :to="{ name: 'home' }" class="mobile-header__brand flex items-center">
+        <img :src="logoUrl" alt="" class="mobile-header__logo" />
+        <span class="mobile-header__name">Blueprint</span>
       </RouterLink>
       <Button variant="ghost" size="sm" :aria-label="isOpen ? 'Fechar menu' : 'Abrir menu'" @click="isOpen = !isOpen">
         <Icon :name="isOpen ? 'close' : 'menu'" />
       </Button>
     </div>
 
-    <nav v-if="isOpen" class="grid gap-1 border-t border-border-muted px-4 py-4" aria-label="Navegacao mobile">
+    <nav v-if="isOpen" class="mobile-header__navigation grid" aria-label="Navegacao mobile">
       <RouterLink
         v-for="item in primaryNavigation"
         :key="item.label"
         :to="{ name: item.routeName }"
-        class="rounded-md px-3 py-2 text-muted"
-        active-class="bg-primary-50 font-semibold text-primary"
+        class="mobile-header__link"
+        active-class="--active"
       >
         {{ item.label }}
       </RouterLink>
       <span
         v-for="item in secondaryNavigation"
         :key="item.label"
-        class="rounded-md px-3 py-2 text-muted"
+        class="mobile-header__link"
       >
         {{ item.label }}
       </span>
     </nav>
   </header>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.mobile-header {
+  @apply top-0 z-40 border-b border-border-muted bg-surface/95 backdrop-blur;
+}
+
+.mobile-header__bar {
+  @apply h-16 px-4;
+}
+
+.mobile-header__brand {
+  @apply gap-2.5;
+}
+
+.mobile-header__logo {
+  @apply size-6;
+}
+
+.mobile-header__name {
+  @apply text-xl font-semibold text-foreground;
+}
+
+.mobile-header__navigation {
+  @apply gap-1 border-t border-border-muted px-4 py-4;
+}
+
+.mobile-header__link {
+  @apply rounded-md px-3 py-2 text-muted;
+}
+
+.mobile-header__link.--active {
+  @apply bg-primary-50 font-semibold text-primary;
+}
+</style>

@@ -38,15 +38,13 @@ const inputId = computed(() => props.id ?? generatedId)
 const messageId = computed(() => `${inputId.value}-message`)
 
 const sizeClasses: Record<InputSize, string> = {
-  sm: 'h-[var(--bp-input-height-sm)] px-[var(--bp-input-padding-x-sm)] text-xs',
-  md: 'h-[var(--bp-input-height-md)] px-[var(--bp-input-padding-x-md)] text-sm',
-  lg: 'h-[var(--bp-input-height-lg)] px-[var(--bp-input-padding-x-lg)] text-base',
+  sm: '--sm',
+  md: '--md',
+  lg: '--lg',
 }
 
 const stateClasses = computed(() =>
-  props.error
-    ? 'border-danger focus:border-danger focus:ring-[var(--bp-color-red-100)]'
-    : 'border-border hover:border-border-strong focus:border-focus focus:ring-[var(--bp-color-focus-ring)]',
+  props.error ? '--error' : '--default',
 )
 
 function updateValue(event: Event) {
@@ -58,16 +56,16 @@ function updateValue(event: Event) {
 </script>
 
 <template>
-  <div class="grid w-full gap-1.5">
-    <label v-if="label" :for="inputId" class="text-sm font-medium text-foreground">
+  <div class="input grid">
+    <label v-if="label" :for="inputId" class="input__label">
       {{ label }}
-      <span v-if="required" class="text-danger" aria-hidden="true">*</span>
+      <span v-if="required" class="input__required" aria-hidden="true">*</span>
     </label>
 
     <div class="relative">
       <span
         v-if="$slots.leading"
-        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-[var(--bp-input-padding-x-md)] text-muted"
+        class="input__leading absolute flex items-center"
       >
         <slot name="leading" />
       </span>
@@ -83,18 +81,18 @@ function updateValue(event: Event) {
         :aria-invalid="error ? 'true' : undefined"
         :aria-describedby="error || hint ? messageId : undefined"
         :class="[
-          'w-full rounded-md border bg-surface text-foreground shadow-[var(--bp-shadow-control)] outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-subtle focus:ring-[3px] disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-muted disabled:opacity-70 read-only:bg-surface-subtle',
+          'input__control',
           sizeClasses[size],
           stateClasses,
-          $slots.leading && 'pl-10',
-          $slots.trailing && 'pr-10',
+          $slots.leading && '--with-leading',
+          $slots.trailing && '--with-trailing',
         ]"
         @input="updateValue"
       />
 
       <span
         v-if="$slots.trailing"
-        class="absolute inset-y-0 right-0 flex items-center pr-[var(--bp-input-padding-x-md)] text-muted"
+        class="input__trailing absolute flex items-center"
       >
         <slot name="trailing" />
       </span>
@@ -103,9 +101,74 @@ function updateValue(event: Event) {
     <p
       v-if="error || hint"
       :id="messageId"
-      :class="['text-xs', error ? 'text-danger' : 'text-muted']"
+      :class="['input__message', error ? '--error' : '--hint']"
     >
       {{ error || hint }}
     </p>
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.input {
+  @apply w-full gap-1.5;
+}
+
+.input__label {
+  @apply text-sm font-medium text-foreground;
+}
+
+.input__required,
+.input__message.--error {
+  @apply text-danger;
+}
+
+.input__leading {
+  @apply pointer-events-none inset-y-0 left-0 pl-[var(--bp-input-padding-x-md)] text-muted;
+}
+
+.input__trailing {
+  @apply inset-y-0 right-0 pr-[var(--bp-input-padding-x-md)] text-muted;
+}
+
+.input__control {
+  @apply w-full rounded-md border bg-surface text-foreground shadow-[var(--bp-shadow-control)] outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-subtle focus:ring-[3px] disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-muted disabled:opacity-70 read-only:bg-surface-subtle;
+}
+
+.input__control.--sm {
+  @apply h-[var(--bp-input-height-sm)] px-[var(--bp-input-padding-x-sm)] text-xs;
+}
+
+.input__control.--md {
+  @apply h-[var(--bp-input-height-md)] px-[var(--bp-input-padding-x-md)] text-sm;
+}
+
+.input__control.--lg {
+  @apply h-[var(--bp-input-height-lg)] px-[var(--bp-input-padding-x-lg)] text-base;
+}
+
+.input__control.--default {
+  @apply border-border hover:border-border-strong focus:border-focus focus:ring-[var(--bp-color-focus-ring)];
+}
+
+.input__control.--error {
+  @apply border-danger focus:border-danger focus:ring-[var(--bp-color-red-100)];
+}
+
+.input__control.--with-leading {
+  @apply pl-10;
+}
+
+.input__control.--with-trailing {
+  @apply pr-10;
+}
+
+.input__message {
+  @apply text-xs;
+}
+
+.input__message.--hint {
+  @apply text-muted;
+}
+</style>

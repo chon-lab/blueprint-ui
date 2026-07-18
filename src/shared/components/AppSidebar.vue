@@ -5,34 +5,87 @@ import { primaryNavigation, secondaryNavigation } from '@/shared/navigation/navi
 
 <template>
   <aside
-    class="hidden h-full min-h-0 flex-col rounded-lg border border-border bg-surface px-10 py-[clamp(1.25rem,4vh,2.5rem)] lg:flex"
+    class="sidebar hidden flex-col lg:flex"
   >
-    <RouterLink :to="{ name: 'home' }" class="flex items-center gap-3" aria-label="Blueprint - Inicio">
-      <img :src="logoUrl" alt="" class="size-6" />
-      <span class="text-2xl font-semibold tracking-[-0.02em] text-neutral-800">Blueprint</span>
+    <RouterLink :to="{ name: 'home' }" class="sidebar__brand flex items-center" aria-label="Blueprint - Inicio">
+      <img :src="logoUrl" alt="" class="sidebar__logo" />
+      <span class="sidebar__name">Blueprint</span>
     </RouterLink>
 
-    <nav class="mt-[clamp(1.5rem,5vh,3rem)] grid gap-[clamp(0.5rem,1.6vh,1rem)]" aria-label="Navegacao principal">
+    <nav class="sidebar__navigation --primary grid" aria-label="Navegacao principal">
       <RouterLink
         v-for="item in primaryNavigation"
         :key="item.label"
         :to="{ name: item.routeName }"
-        class="text-base text-muted transition-colors hover:text-foreground"
-        active-class="font-semibold text-foreground"
+        class="sidebar__link"
+        active-class="--active"
       >
         {{ item.label }}
       </RouterLink>
     </nav>
 
-    <nav class="mt-[clamp(1rem,3vh,2rem)] grid gap-[clamp(0.5rem,1.6vh,1rem)]" aria-label="Navegacao administrativa">
-      <span v-for="item in secondaryNavigation" :key="item.label" class="text-base text-muted">
+    <nav class="sidebar__navigation --secondary grid" aria-label="Navegacao administrativa">
+      <span v-for="item in secondaryNavigation" :key="item.label" class="sidebar__secondary-link">
         {{ item.label }}
       </span>
     </nav>
 
-    <div class="mt-auto flex items-center gap-3 text-sm text-foreground">
-      <span class="flex size-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-500">G</span>
+    <div class="sidebar__user flex items-center">
+      <span class="sidebar__avatar flex items-center justify-center">G</span>
       <span>Gabriel Lima</span>
     </div>
   </aside>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.sidebar {
+  @apply h-full min-h-0 rounded-lg border border-border bg-surface px-10 py-[clamp(1.25rem,4vh,2.5rem)];
+}
+
+.sidebar__brand {
+  @apply gap-3;
+}
+
+.sidebar__logo {
+  @apply size-6;
+}
+
+.sidebar__name {
+  @apply text-2xl font-semibold tracking-[-0.02em] text-neutral-800;
+}
+
+.sidebar__navigation {
+  @apply gap-[clamp(0.5rem,1.6vh,1rem)];
+}
+
+.sidebar__navigation.--primary {
+  @apply mt-[clamp(1.5rem,5vh,3rem)];
+}
+
+.sidebar__navigation.--secondary {
+  @apply mt-[clamp(1rem,3vh,2rem)];
+}
+
+.sidebar__link,
+.sidebar__secondary-link {
+  @apply text-base text-muted;
+}
+
+.sidebar__link {
+  @apply transition-colors hover:text-foreground;
+}
+
+.sidebar__link.--active {
+  @apply font-semibold text-foreground;
+}
+
+.sidebar__user {
+  @apply mt-auto gap-3 text-sm text-foreground;
+}
+
+.sidebar__avatar {
+  @apply size-8 rounded-full bg-neutral-100 text-neutral-500;
+}
+</style>

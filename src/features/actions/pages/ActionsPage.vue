@@ -67,14 +67,14 @@ const cityOptions: SelectOption[] = [
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col overflow-hidden" :aria-busy="isLoading">
+  <div class="actions-page flex flex-col overflow-hidden" :aria-busy="isLoading">
     <PageHeader>
       <template #title>A&ccedil;&otilde;es</template>
       <template #description>
         Iniciativas, projetos ou atividades realizadas por
-        <RouterLink :to="{ name: 'agents' }" class="text-primary underline">agentes</RouterLink>
+        <RouterLink :to="{ name: 'agents' }" class="actions-page__context-link">agentes</RouterLink>
         do ecossistema tur&iacute;stico, relacionadas aos
-        <RouterLink :to="{ name: 'sdgs' }" class="text-primary underline">
+        <RouterLink :to="{ name: 'sdgs' }" class="actions-page__context-link">
           Objetivos de Desenvolvimento Sustent&aacute;vel (ODS)
         </RouterLink>.
       </template>
@@ -83,13 +83,13 @@ const cityOptions: SelectOption[] = [
       </template>
     </PageHeader>
 
-    <section class="mt-[clamp(0.75rem,3vh,2rem)] grid shrink-0 gap-2.5">
-      <div class="flex flex-nowrap items-center gap-2.5 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <Select v-model="impactType" class="w-[5.25rem]" :options="typeOptions" accessible-label="Filtrar por tipo" />
-        <Select v-model="region" class="w-28" :options="regionOptions" accessible-label="Filtrar por regiao" />
-        <Select v-model="state" class="w-24" :options="stateOptions" accessible-label="Filtrar por estado" />
-        <Select v-model="city" class="w-[10.5rem]" :options="cityOptions" accessible-label="Filtrar por cidade" />
-        <div class="w-64 shrink-0 sm:ml-auto sm:w-80">
+    <section class="actions-page__filters grid">
+      <div class="actions-page__filter-row flex flex-nowrap items-center overflow-x-auto">
+        <Select v-model="impactType" class="actions-page__filter --type" :options="typeOptions" accessible-label="Filtrar por tipo" />
+        <Select v-model="region" class="actions-page__filter --region" :options="regionOptions" accessible-label="Filtrar por regiao" />
+        <Select v-model="state" class="actions-page__filter --state" :options="stateOptions" accessible-label="Filtrar por estado" />
+        <Select v-model="city" class="actions-page__filter --city" :options="cityOptions" accessible-label="Filtrar por cidade" />
+        <div class="actions-page__search">
           <Input v-model="search" placeholder="Pesquisar" aria-label="Pesquisar acoes">
             <template #trailing><Icon name="search" :size="16" /></template>
           </Input>
@@ -102,15 +102,15 @@ const cityOptions: SelectOption[] = [
       />
     </section>
 
-    <div class="mt-[clamp(0.75rem,2vh,1.25rem)] grid min-h-0 flex-1 grid-rows-[5.5rem_minmax(0,1fr)] gap-3 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5">
-      <MetricRail :items="metrics" class="h-full" />
+    <div class="actions-page__content grid">
+      <MetricRail :items="metrics" class="actions-page__metrics" />
 
-      <div class="flex min-h-0 flex-col gap-1.5">
-        <section ref="containerRef" class="grid min-h-0 flex-1 gap-2.5" :style="gridStyle">
+      <div class="actions-page__results flex flex-col">
+        <section ref="containerRef" class="actions-page__grid grid" :style="gridStyle">
           <ActionCard v-for="action in visibleItems" :key="action.id" :action="action" />
           <p
             v-if="!isLoading && actions.length === 0"
-            class="flex items-center justify-center text-center text-muted"
+            class="actions-page__empty flex items-center justify-center"
             style="grid-column: 1 / -1; grid-row: 1 / -1"
           >
             Nenhuma a&ccedil;&atilde;o encontrada.
@@ -121,3 +121,67 @@ const cityOptions: SelectOption[] = [
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.actions-page {
+  @apply h-full min-h-0;
+}
+
+.actions-page__context-link {
+  @apply text-primary underline;
+}
+
+.actions-page__filters {
+  @apply mt-[clamp(0.75rem,3vh,2rem)] shrink-0 gap-2.5;
+}
+
+.actions-page__filter-row {
+  @apply gap-2.5 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+.actions-page__filter {
+  @apply shrink-0;
+}
+
+.actions-page__filter.--type {
+  @apply w-[5.25rem];
+}
+
+.actions-page__filter.--region {
+  @apply w-28;
+}
+
+.actions-page__filter.--state {
+  @apply w-24;
+}
+
+.actions-page__filter.--city {
+  @apply w-[10.5rem];
+}
+
+.actions-page__search {
+  @apply w-64 shrink-0 sm:ml-auto sm:w-80;
+}
+
+.actions-page__content {
+  @apply mt-[clamp(0.75rem,2vh,1.25rem)] min-h-0 flex-1 grid-rows-[5.5rem_minmax(0,1fr)] gap-3 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5;
+}
+
+.actions-page__metrics {
+  @apply h-full;
+}
+
+.actions-page__results {
+  @apply min-h-0 gap-1.5;
+}
+
+.actions-page__grid {
+  @apply min-h-0 flex-1 gap-2.5;
+}
+
+.actions-page__empty {
+  @apply text-center text-muted;
+}
+</style>

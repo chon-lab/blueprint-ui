@@ -75,14 +75,14 @@ const cityOptions: SelectOption[] = [
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col overflow-hidden" :aria-busy="isLoading">
+  <div class="agents-page flex flex-col overflow-hidden" :aria-busy="isLoading">
     <PageHeader>
       <template #title>Agentes</template>
       <template #description>
         Organiza&ccedil;&otilde;es, institui&ccedil;&otilde;es e &oacute;rg&atilde;os que implementam ou participam de
-        <RouterLink :to="{ name: 'actions' }" class="text-primary underline">a&ccedil;&otilde;es</RouterLink>
+        <RouterLink :to="{ name: 'actions' }" class="agents-page__context-link">a&ccedil;&otilde;es</RouterLink>
         relacionadas aos
-        <RouterLink :to="{ name: 'sdgs' }" class="text-primary underline">
+        <RouterLink :to="{ name: 'sdgs' }" class="agents-page__context-link">
           Objetivos de Desenvolvimento Sustent&aacute;vel (ODS)
         </RouterLink>.
       </template>
@@ -91,22 +91,22 @@ const cityOptions: SelectOption[] = [
       </template>
     </PageHeader>
 
-    <section class="mt-[clamp(0.75rem,3vh,2rem)] grid shrink-0 gap-2.5">
-      <div class="flex flex-nowrap items-center gap-4 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div class="flex shrink-0 flex-nowrap gap-2.5">
-          <Select v-model="type" class="w-[5.25rem]" :options="typeOptions" accessible-label="Filtrar por tipo" />
-          <Select v-model="region" class="w-28" :options="regionOptions" accessible-label="Filtrar por regiao" />
-          <Select v-model="state" class="w-24" :options="stateOptions" accessible-label="Filtrar por estado" />
-          <Select v-model="city" class="w-24" :options="cityOptions" accessible-label="Filtrar por cidade" />
+    <section class="agents-page__filters grid">
+      <div class="agents-page__filter-row flex flex-nowrap items-center overflow-x-auto">
+        <div class="agents-page__selects flex flex-nowrap">
+          <Select v-model="type" class="agents-page__filter --type" :options="typeOptions" accessible-label="Filtrar por tipo" />
+          <Select v-model="region" class="agents-page__filter --region" :options="regionOptions" accessible-label="Filtrar por regiao" />
+          <Select v-model="state" class="agents-page__filter --location" :options="stateOptions" accessible-label="Filtrar por estado" />
+          <Select v-model="city" class="agents-page__filter --location" :options="cityOptions" accessible-label="Filtrar por cidade" />
         </div>
 
-        <div class="flex shrink-0 flex-nowrap items-center gap-4">
+        <div class="agents-page__switches flex flex-nowrap items-center">
           <Switch v-model="ownersOnly" size="sm" label="Donos" />
           <Switch v-model="implementationPartnersOnly" size="sm" :label="'Parceiros de implementa\u00e7\u00e3o'" />
           <Switch v-model="contributingPartnersOnly" size="sm" :label="'Parceiros de contribui\u00e7\u00e3o'" />
         </div>
 
-        <div class="w-64 shrink-0 xl:ml-auto xl:w-80">
+        <div class="agents-page__search">
           <Input v-model="search" placeholder="Pesquisar" aria-label="Pesquisar agentes">
             <template #trailing><Icon name="search" :size="16" /></template>
           </Input>
@@ -120,15 +120,15 @@ const cityOptions: SelectOption[] = [
       />
     </section>
 
-    <div class="mt-[clamp(0.75rem,2vh,1.25rem)] grid min-h-0 flex-1 grid-rows-[5.5rem_minmax(0,1fr)] gap-3 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5">
-      <MetricRail :items="metrics" class="h-full" />
+    <div class="agents-page__content grid">
+      <MetricRail :items="metrics" class="agents-page__metrics" />
 
-      <div class="flex min-h-0 flex-col gap-1.5">
-        <section ref="containerRef" class="grid min-h-0 flex-1 gap-2.5" :style="gridStyle">
+      <div class="agents-page__results flex flex-col">
+        <section ref="containerRef" class="agents-page__grid grid" :style="gridStyle">
           <AgentCard v-for="agent in visibleItems" :key="agent.id" :agent="agent" />
           <p
             v-if="!isLoading && agents.length === 0"
-            class="flex items-center justify-center text-center text-muted"
+            class="agents-page__empty flex items-center justify-center"
             style="grid-column: 1 / -1; grid-row: 1 / -1"
           >
             Nenhum agente encontrado.
@@ -139,3 +139,71 @@ const cityOptions: SelectOption[] = [
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.agents-page {
+  @apply h-full min-h-0;
+}
+
+.agents-page__context-link {
+  @apply text-primary underline;
+}
+
+.agents-page__filters {
+  @apply mt-[clamp(0.75rem,3vh,2rem)] shrink-0 gap-2.5;
+}
+
+.agents-page__filter-row {
+  @apply gap-4 pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+.agents-page__selects {
+  @apply shrink-0 gap-2.5;
+}
+
+.agents-page__filter {
+  @apply shrink-0;
+}
+
+.agents-page__filter.--type {
+  @apply w-[5.25rem];
+}
+
+.agents-page__filter.--region {
+  @apply w-28;
+}
+
+.agents-page__filter.--location {
+  @apply w-24;
+}
+
+.agents-page__switches {
+  @apply shrink-0 gap-4;
+}
+
+.agents-page__search {
+  @apply w-64 shrink-0 xl:ml-auto xl:w-80;
+}
+
+.agents-page__content {
+  @apply mt-[clamp(0.75rem,2vh,1.25rem)] min-h-0 flex-1 grid-rows-[5.5rem_minmax(0,1fr)] gap-3 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5;
+}
+
+.agents-page__metrics {
+  @apply h-full;
+}
+
+.agents-page__results {
+  @apply min-h-0 gap-1.5;
+}
+
+.agents-page__grid {
+  @apply min-h-0 flex-1 gap-2.5;
+}
+
+.agents-page__empty {
+  @apply text-center text-muted;
+}
+</style>

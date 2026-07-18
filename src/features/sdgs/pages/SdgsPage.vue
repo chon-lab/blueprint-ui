@@ -29,7 +29,7 @@ const {
 </script>
 
 <template>
-  <div class="flex h-full min-h-0 flex-col overflow-hidden" :aria-busy="isLoading">
+  <div class="sdgs-page flex flex-col overflow-hidden" :aria-busy="isLoading">
     <PageHeader>
       <template #title>Objetivos de Desenvolvimento Nacional (ODS)</template>
       <template #description>
@@ -40,9 +40,21 @@ const {
       </template>
     </PageHeader>
 
-    <section ref="containerRef" class="mt-[clamp(0.75rem,4vh,2.5rem)] grid min-h-0 flex-1 gap-2.5" :style="gridStyle">
+    <section ref="containerRef" class="sdgs-page__grid grid" :style="gridStyle">
       <SdgCard v-for="sdg in visibleItems" :key="sdg.id" :sdg="sdg" />
     </section>
     <PaginationControls :current-page="currentPage" :page-count="pageCount" @change="goToPage" />
   </div>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.sdgs-page {
+  @apply h-full min-h-0;
+}
+
+.sdgs-page__grid {
+  @apply mt-[clamp(0.75rem,4vh,2.5rem)] min-h-0 flex-1 gap-2.5;
+}
+</style>

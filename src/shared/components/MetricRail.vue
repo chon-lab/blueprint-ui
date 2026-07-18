@@ -13,8 +13,16 @@ defineProps<{
 
 <template>
   <aside
-    class="grid min-h-0 grid-flow-col auto-cols-[minmax(8rem,1fr)] grid-rows-1 gap-2.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-1 lg:grid-rows-5 lg:overflow-hidden"
+    class="metric-rail grid grid-flow-col overflow-x-auto lg:grid-flow-row lg:overflow-hidden"
   >
     <MetricCard v-for="item in items" :key="`${item.value}-${item.label}`" v-bind="item" />
   </aside>
 </template>
+
+<style scoped>
+@reference "@/assets/styles/main.css";
+
+.metric-rail {
+  @apply min-h-0 auto-cols-[minmax(8rem,1fr)] grid-rows-1 gap-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:auto-cols-auto lg:grid-cols-1 lg:grid-rows-5;
+}
+</style>
