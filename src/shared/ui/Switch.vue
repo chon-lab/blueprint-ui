@@ -59,7 +59,7 @@ function updateValue(event: Event) {
   <label
     :for="inputId"
     :class="[
-      'switch inline-flex items-start',
+      'switch inline-flex items-center',
       disabled ? '--disabled' : '--enabled',
     ]"
   >
@@ -111,7 +111,7 @@ function updateValue(event: Event) {
 @reference "@/assets/styles/main.css";
 
 .switch {
-  @apply w-fit gap-2.5;
+  @apply min-h-[var(--bp-layout-touch-target)] w-fit gap-2.5;
 }
 
 .switch.--disabled {
@@ -123,7 +123,7 @@ function updateValue(event: Event) {
 }
 
 .switch__control {
-  @apply mt-0.5 shrink-0;
+  @apply shrink-0;
 }
 
 .switch__input {

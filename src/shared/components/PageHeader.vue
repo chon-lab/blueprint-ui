@@ -20,7 +20,7 @@
 @reference "@/assets/styles/main.css";
 
 .page-header {
-  @apply gap-5;
+  @apply gap-4 sm:gap-5;
 }
 
 .page-header__content {
@@ -46,6 +46,6 @@
 }
 
 .page-header__actions {
-  @apply shrink-0 gap-2.5;
+  @apply shrink-0 gap-2 sm:gap-2.5;
 }
 </style>

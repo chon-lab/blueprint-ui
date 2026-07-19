@@ -28,6 +28,6 @@ import { isSearchModeActive } from '@/shared/composables/useSearchMode'
 }
 
 .app-main {
-  @apply min-h-0 flex-1 overflow-visible px-4 pb-0 pt-[clamp(1rem,3.8vh,2.5rem)] sm:px-6 lg:overflow-hidden lg:px-0 lg:py-[clamp(1rem,3.8vh,2.5rem)] lg:pr-10;
+  @apply min-h-0 flex-1 overflow-visible px-[var(--bp-layout-page-inline)] pb-0 pt-[var(--bp-layout-page-top)] lg:overflow-hidden lg:px-0 lg:py-[clamp(1rem,3.8vh,2.5rem)] lg:pr-10;
 }
 </style>

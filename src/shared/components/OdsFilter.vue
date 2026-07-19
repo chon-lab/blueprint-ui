@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
 @reference "@/assets/styles/main.css";
 
 .ods-filter {
-  @apply min-w-0 gap-2.5;
+  @apply min-w-0 gap-3;
 }
 
 .ods-filter__trigger {
@@ -137,11 +137,11 @@ onBeforeUnmount(() => {
 }
 
 .ods-filter__selection {
-  @apply min-w-0 flex-1 gap-2 py-0.5 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  @apply min-w-0 flex-1 gap-2 py-1 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 
 .ods-filter__chip {
-  @apply h-7 shrink-0 gap-1.5 rounded-full px-3 text-xs outline-none transition-opacity hover:opacity-75 focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+  @apply h-9 shrink-0 gap-1.5 rounded-full px-3 text-xs outline-none transition-opacity hover:opacity-75 focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
 }
 
 .ods-filter__dropdown {
@@ -165,7 +165,7 @@ onBeforeUnmount(() => {
 }
 
 .ods-filter__option {
-  @apply w-full gap-3 rounded-md px-2 py-2 text-left text-sm outline-none hover:bg-surface-muted focus-visible:bg-primary-50;
+  @apply min-h-[var(--bp-layout-touch-target)] w-full gap-3 rounded-md px-2 py-2 text-left text-sm outline-none hover:bg-surface-muted focus-visible:bg-primary-50;
 }
 
 .ods-filter__option-code {

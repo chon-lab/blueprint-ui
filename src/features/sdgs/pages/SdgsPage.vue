@@ -33,16 +33,16 @@ const { sdgs, isLoading } = useSdgs()
 }
 
 .sdgs-page__grid {
-  @apply mt-[clamp(0.75rem,3vh,2rem)] min-h-0 flex-1 auto-cols-[minmax(15rem,78vw)] grid-flow-col grid-rows-2 gap-2.5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  @apply mt-[var(--bp-layout-section-gap)] min-h-0 flex-1 auto-cols-[minmax(15rem,78vw)] grid-flow-col grid-rows-2 gap-3 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-[clamp(0.75rem,3vh,2rem)];
 }
 
 @media (width < 640px) {
   .sdgs-page__grid {
-    @apply -mr-4 w-[calc(100%+1rem)];
+    @apply -mr-[var(--bp-layout-page-inline)] w-[calc(100%+var(--bp-layout-page-inline))];
   }
 
   .sdgs-page__header :deep(.page-header__description) {
-    @apply -mr-4 w-[calc(100%+1rem)];
+    @apply -mr-[var(--bp-layout-page-inline)] w-[calc(100%+var(--bp-layout-page-inline))];
   }
 }
 
@@ -54,8 +54,6 @@ const { sdgs, isLoading } = useSdgs()
 
 @media (width >= 900px) {
   .sdgs-page__grid {
-    @apply gap-2.5;
-
     @apply grid-cols-6 grid-rows-3;
   }
 }

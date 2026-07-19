@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
 }
 
 .popup__header {
-  @apply shrink-0 border-b border-border-muted px-5 py-4 sm:px-6;
+  @apply shrink-0 border-b border-border-muted p-4 sm:px-6;
 }
 
 .popup__title {
@@ -140,11 +140,11 @@ onBeforeUnmount(() => {
 }
 
 .popup__close {
-  @apply size-10 rounded-full text-muted outline-none transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+  @apply size-11 rounded-full text-muted outline-none transition-colors hover:bg-surface-muted hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
 }
 
 .popup__content {
-  @apply min-h-0 overflow-y-auto p-5 sm:p-6;
+  @apply min-h-0 overflow-y-auto p-4 sm:p-6;
 }
 
 .popup-enter-active,

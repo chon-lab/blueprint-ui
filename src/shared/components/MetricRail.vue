@@ -129,7 +129,7 @@ function goToPage(page: number) {
 }
 
 .metric-rail__items {
-  @apply min-h-0 flex-1 auto-cols-[minmax(8rem,1fr)] grid-rows-1 gap-2.5 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:auto-cols-auto lg:grid-cols-1 lg:grid-rows-4 lg:pr-0;
+  @apply min-h-0 flex-1 auto-cols-[minmax(8rem,1fr)] grid-rows-1 gap-3 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:auto-cols-auto lg:grid-cols-1 lg:grid-rows-4 lg:gap-2.5 lg:pr-0;
 }
 
 .metric-rail__items.--with-expand-card {

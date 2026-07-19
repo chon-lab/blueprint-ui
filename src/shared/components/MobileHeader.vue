@@ -20,7 +20,7 @@ router.afterEach(() => {
         <img :src="logoUrl" alt="" class="mobile-header__logo" />
         <span class="mobile-header__name">Blueprint</span>
       </RouterLink>
-      <Button variant="ghost" size="sm" :aria-label="isOpen ? 'Fechar menu' : 'Abrir menu'" @click="isOpen = !isOpen">
+      <Button variant="ghost" icon-only :aria-label="isOpen ? 'Fechar menu' : 'Abrir menu'" @click="isOpen = !isOpen">
         <Icon :name="isOpen ? 'close' : 'menu'" />
       </Button>
     </div>
@@ -30,7 +30,7 @@ router.afterEach(() => {
         v-for="item in primaryNavigation"
         :key="item.label"
         :to="{ name: item.routeName }"
-        class="mobile-header__link"
+        class="mobile-header__link flex items-center"
         exact-active-class="--active"
       >
         {{ item.label }}
@@ -38,7 +38,7 @@ router.afterEach(() => {
       <span
         v-for="item in secondaryNavigation"
         :key="item.label"
-        class="mobile-header__link"
+        class="mobile-header__link flex items-center"
       >
         {{ item.label }}
       </span>
@@ -54,11 +54,11 @@ router.afterEach(() => {
 }
 
 .mobile-header__bar {
-  @apply h-16 px-4;
+  @apply h-16 px-[var(--bp-layout-page-inline)];
 }
 
 .mobile-header__brand {
-  @apply gap-2.5;
+  @apply min-h-[var(--bp-layout-touch-target)] gap-2.5;
 }
 
 .mobile-header__logo {
@@ -70,11 +70,11 @@ router.afterEach(() => {
 }
 
 .mobile-header__navigation {
-  @apply gap-1 border-t border-border-muted px-4 py-4;
+  @apply gap-1 border-t border-border-muted px-[var(--bp-layout-page-inline)] py-4;
 }
 
 .mobile-header__link {
-  @apply rounded-md px-3 py-2 text-muted;
+  @apply min-h-11 rounded-md px-3 py-2 text-muted;
 }
 
 .mobile-header__link.--active {

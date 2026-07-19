@@ -57,7 +57,7 @@ const filteredOds = computed(() =>
 @reference "@/assets/styles/main.css";
 
 .agent-card {
-  @apply h-full min-h-0 w-full rounded-lg border border-border bg-surface px-5 py-4 text-left outline-none transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+  @apply h-full min-h-0 w-full rounded-lg border border-border bg-surface p-[var(--bp-layout-card-padding)] text-left outline-none transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
 }
 
 .agent-card__type {
@@ -65,7 +65,7 @@ const filteredOds = computed(() =>
 }
 
 .agent-card__content {
-  @apply mt-auto pt-5;
+  @apply mt-3;
 }
 
 .agent-card__title {
@@ -73,7 +73,7 @@ const filteredOds = computed(() =>
 }
 
 .agent-card__location {
-  @apply mt-2 truncate text-sm leading-5 text-muted;
+  @apply mt-1.5 truncate text-sm leading-5 text-muted;
 }
 
 .agent-card__location-separator {
@@ -81,7 +81,7 @@ const filteredOds = computed(() =>
 }
 
 .agent-card__metadata {
-  @apply mt-auto gap-2 pt-4;
+  @apply mt-auto gap-2 pt-3;
 }
 
 .agent-card__action-count {

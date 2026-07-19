@@ -57,7 +57,7 @@ watch(
 @reference "@/assets/styles/main.css";
 
 .ranking-card {
-  @apply h-full min-h-0 rounded-lg border border-border bg-surface px-5 py-4;
+  @apply h-full min-h-0 rounded-lg border border-border bg-surface p-[var(--bp-layout-card-padding)];
 }
 
 .ranking-card__title {

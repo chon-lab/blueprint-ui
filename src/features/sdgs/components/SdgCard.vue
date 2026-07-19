@@ -21,17 +21,17 @@ defineProps<{
 @reference "@/assets/styles/main.css";
 
 .sdg-card {
-  @apply h-full min-h-0 rounded-sm px-[clamp(0.5rem,1.3vw,1.25rem)] py-[clamp(0.45rem,1.8vh,1.25rem)] text-white transition-transform duration-150 hover:-translate-y-0.5;
+  @apply h-full min-h-0 rounded-sm p-3 text-white transition-transform duration-150 hover:-translate-y-0.5 sm:px-[clamp(0.75rem,1.3vw,1.25rem)] sm:py-[clamp(0.75rem,1.8vh,1.25rem)];
 
   background-color: color-mix(in srgb, var(--sdg-color) 80%, black);
 }
 
 .sdg-card__code {
-  @apply text-[clamp(1.15rem,2.3vw,2.25rem)] font-semibold leading-none;
+  @apply text-xl font-semibold leading-none sm:text-[clamp(1.25rem,2.3vw,2.25rem)];
 }
 
 .sdg-card__title {
-  @apply mt-[clamp(0.25rem,0.8vh,0.5rem)] line-clamp-3 max-w-52 text-[clamp(0.6rem,1vw,1rem)] font-normal leading-tight;
+  @apply mt-2 line-clamp-3 max-w-52 text-xs font-normal leading-tight sm:text-[clamp(0.75rem,1vw,1rem)];
 }
 
 .sdg-card__spacer {

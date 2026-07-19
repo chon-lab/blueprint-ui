@@ -59,7 +59,7 @@ const visibleOds = computed(() => {
 @reference "@/assets/styles/main.css";
 
 .action-card {
-  @apply h-full min-h-0 w-full rounded-lg border border-border bg-surface px-5 py-4 text-left outline-none transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+  @apply h-full min-h-0 w-full rounded-lg border border-border bg-surface p-[var(--bp-layout-card-padding)] text-left outline-none transition-[border-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-border-strong focus-visible:border-focus focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
 }
 
 .action-card__impact {
@@ -67,7 +67,7 @@ const visibleOds = computed(() => {
 }
 
 .action-card__content {
-  @apply mt-auto;
+  @apply mt-3;
 }
 
 .action-card__title {
@@ -75,11 +75,11 @@ const visibleOds = computed(() => {
 }
 
 .action-card__owner {
-  @apply mt-2 truncate text-sm leading-5 text-muted;
+  @apply mt-1.5 truncate text-sm leading-5 text-muted;
 }
 
 .action-card__ods-list {
-  @apply mt-auto gap-2;
+  @apply mt-auto gap-2 pt-3;
 }
 
 .action-card__ods {

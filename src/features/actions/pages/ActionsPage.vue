@@ -240,7 +240,7 @@ useUrlQuerySync({
 @reference "@/assets/styles/main.css";
 
 .actions-page {
-  @apply h-full min-h-0 overflow-visible px-1.5 pb-0 pt-1.5 lg:overflow-hidden lg:p-1.5;
+  @apply h-full min-h-0 overflow-visible pb-0 lg:overflow-hidden lg:p-1.5;
 }
 
 .actions-page__context-link {
@@ -271,28 +271,21 @@ useUrlQuerySync({
   @apply w-[8rem] shrink-0;
 }
 
-@media (width < 640px) {
+@media (width < 1024px) {
   .actions-page__search-filters,
   .actions-page__ods-filter {
-    @apply -mr-[1.375rem] w-[calc(100%+1.375rem)];
-  }
-}
-
-@media (640px <= width < 1024px) {
-  .actions-page__search-filters,
-  .actions-page__ods-filter {
-    @apply -mr-[1.875rem] w-[calc(100%+1.875rem)];
+    @apply -mr-[var(--bp-layout-page-inline)] w-[calc(100%+var(--bp-layout-page-inline))];
   }
 }
 
 @media (width < 640px) {
   .actions-page__header :deep(.page-header__description) {
-    @apply -mr-[1.375rem] w-[calc(100%+1.375rem)];
+    @apply -mr-[var(--bp-layout-page-inline)] w-[calc(100%+var(--bp-layout-page-inline))];
   }
 }
 
 .actions-page__content {
-  @apply mt-[clamp(0.75rem,2vh,1.25rem)] min-h-0 flex-1 grid-rows-[6rem_minmax(0,1fr)] gap-3 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5;
+  @apply mt-[var(--bp-layout-section-gap)] min-h-0 flex-1 grid-rows-[6rem_minmax(0,1fr)] gap-4 lg:mt-[clamp(0.75rem,2vh,1.25rem)] lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:grid-rows-1 lg:gap-5;
 }
 
 .actions-page__overview {
@@ -303,15 +296,9 @@ useUrlQuerySync({
   @apply min-h-0 flex-1;
 }
 
-@media (width < 640px) {
+@media (width < 1024px) {
   .actions-page__metrics {
-    @apply -mr-[1.375rem] w-[calc(100%+1.375rem)];
-  }
-}
-
-@media (640px <= width < 1024px) {
-  .actions-page__metrics {
-    @apply -mr-[1.875rem] w-[calc(100%+1.875rem)];
+    @apply -mr-[var(--bp-layout-page-inline)] w-[calc(100%+var(--bp-layout-page-inline))];
   }
 }
 
@@ -328,7 +315,7 @@ useUrlQuerySync({
 }
 
 .actions-page__grid {
-  @apply h-full min-h-0 gap-2.5;
+  @apply h-full min-h-0 gap-3;
 }
 
 .actions-page__viewport.--feed .actions-page__grid {

@@ -37,6 +37,7 @@ function changePage(page: number) {
 
 <template>
   <nav
+    v-if="showArrows || pageCount > 1"
     class="pagination flex items-center justify-center"
     :aria-label="ariaLabel ?? 'Paginacao dos cards'"
   >
@@ -87,11 +88,11 @@ function changePage(page: number) {
 @reference "@/assets/styles/main.css";
 
 .pagination {
-  @apply shrink-0 gap-1 px-2 py-1.5;
+  @apply shrink-0 gap-1 px-2 py-1;
 }
 
 .pagination__arrow {
-  @apply size-7 rounded-full bg-surface text-primary outline-none transition-colors hover:bg-surface-muted hover:text-primary-hover focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)] disabled:border-border-muted disabled:text-muted disabled:opacity-70;
+  @apply size-9 rounded-full bg-surface text-primary outline-none transition-colors hover:bg-surface-muted hover:text-primary-hover focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)] disabled:border-border-muted disabled:text-muted disabled:opacity-70;
 }
 
 .pagination__arrow-icon.--previous {
@@ -103,11 +104,11 @@ function changePage(page: number) {
 }
 
 .pagination__page {
-  @apply size-5 rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
+  @apply size-8 rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--bp-color-focus-ring)];
 }
 
 .pagination__dot {
-  @apply size-1.5 rounded-full transition-[background-color,transform] sm:size-2;
+  @apply size-2 rounded-full transition-[background-color,transform];
 }
 
 .pagination__dot.--active {

@@ -25,7 +25,7 @@ const {
   ],
   minItemHeight: 88,
   maxRows: 2,
-  gap: 10,
+  gap: 12,
 })
 
 const {
@@ -43,7 +43,7 @@ const {
   ],
   minItemHeight: 180,
   maxRows: 1,
-  gap: 10,
+  gap: 12,
 })
 </script>
 
@@ -119,7 +119,7 @@ const {
 }
 
 .dashboard-page__content {
-  @apply mt-[clamp(0.75rem,4vh,2.5rem)] min-h-0 flex-1 gap-5 2xl:grid-cols-[minmax(0,1fr)_minmax(22rem,36%)];
+  @apply mt-[var(--bp-layout-section-gap)] min-h-0 flex-1 gap-5 lg:mt-[clamp(0.75rem,4vh,2.5rem)] 2xl:grid-cols-[minmax(0,1fr)_minmax(22rem,36%)];
 }
 
 .dashboard-page__overview,
@@ -128,11 +128,11 @@ const {
 }
 
 .dashboard-page__section-title {
-  @apply mb-2 shrink-0 text-base font-normal text-foreground;
+  @apply mb-3 shrink-0 text-base font-medium text-foreground;
 }
 
 .dashboard-page__indicators {
-  @apply min-h-0 flex-[1.05] gap-2.5;
+  @apply min-h-0 flex-[1.05] gap-3;
 }
 
 .dashboard-page__indicator-pagination {
@@ -140,7 +140,7 @@ const {
 }
 
 .dashboard-page__rankings {
-  @apply min-h-0 flex-1 gap-2.5;
+  @apply min-h-0 flex-1 gap-3;
 }
 
 .dashboard-page__ranking-pagination {

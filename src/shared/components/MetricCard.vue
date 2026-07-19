@@ -22,7 +22,7 @@ defineProps<{
 @reference "@/assets/styles/main.css";
 
 .metric-card {
-  @apply h-full min-h-0 rounded-lg border border-border bg-surface px-3 py-2 text-center;
+  @apply h-full min-h-0 rounded-lg border border-border bg-surface p-[var(--bp-layout-group-gap)] text-center;
 }
 
 .metric-card__values {
