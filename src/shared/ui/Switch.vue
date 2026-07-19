@@ -171,7 +171,7 @@ function updateValue(event: Event) {
 }
 
 .switch__label {
-  @apply text-sm font-medium leading-5 text-foreground;
+  @apply text-sm leading-5 text-foreground;
 }
 
 .switch__description {

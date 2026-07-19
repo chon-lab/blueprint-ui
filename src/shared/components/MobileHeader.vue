@@ -31,7 +31,7 @@ router.afterEach(() => {
         :key="item.label"
         :to="{ name: item.routeName }"
         class="mobile-header__link"
-        active-class="--active"
+        exact-active-class="--active"
       >
         {{ item.label }}
       </RouterLink>

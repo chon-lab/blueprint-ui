@@ -1,36 +1,15 @@
 <script setup lang="ts">
 import HeaderActions from '@/shared/components/HeaderActions.vue'
-import PaginationControls from '@/shared/components/PaginationControls.vue'
 import PageHeader from '@/shared/components/PageHeader.vue'
-import { useResponsiveGridPagination } from '@/shared/composables/useResponsiveGridPagination'
 import SdgCard from '../components/SdgCard.vue'
 import { useSdgs } from '../composables/useSdgs'
 
 const { sdgs, isLoading } = useSdgs()
-
-const {
-  containerRef,
-  currentPage,
-  pageCount,
-  visibleItems,
-  gridStyle,
-  goToPage,
-} = useResponsiveGridPagination(sdgs, {
-  breakpoints: [
-    { minWidth: 1200, columns: 6 },
-    { minWidth: 880, columns: 4 },
-    { minWidth: 600, columns: 3 },
-    { minWidth: 360, columns: 2 },
-    { minWidth: 0, columns: 1 },
-  ],
-  minItemHeight: 150,
-  maxRows: 3,
-})
 </script>
 
 <template>
-  <div class="sdgs-page flex flex-col overflow-hidden" :aria-busy="isLoading">
-    <PageHeader>
+  <div class="sdgs-page flex flex-col" :aria-busy="isLoading">
+    <PageHeader class="sdgs-page__header">
       <template #title>Objetivos de Desenvolvimento Nacional (ODS)</template>
       <template #description>
         S&atilde;o um conjunto de 17 objetivos globais definidos pela ONU para orientar a&ccedil;&otilde;es voltadas ao desenvolvimento sustent&aacute;vel, integrando dimens&otilde;es sociais, econ&ocirc;micas e ambientais.
@@ -40,10 +19,9 @@ const {
       </template>
     </PageHeader>
 
-    <section ref="containerRef" class="sdgs-page__grid grid" :style="gridStyle">
-      <SdgCard v-for="sdg in visibleItems" :key="sdg.id" :sdg="sdg" />
+    <section class="sdgs-page__grid grid">
+      <SdgCard v-for="sdg in sdgs" :key="sdg.id" :sdg="sdg" />
     </section>
-    <PaginationControls :current-page="currentPage" :page-count="pageCount" @change="goToPage" />
   </div>
 </template>
 
@@ -51,10 +29,34 @@ const {
 @reference "@/assets/styles/main.css";
 
 .sdgs-page {
-  @apply h-full min-h-0;
+  @apply h-full min-h-0 overflow-visible lg:overflow-hidden;
 }
 
 .sdgs-page__grid {
-  @apply mt-[clamp(0.75rem,4vh,2.5rem)] min-h-0 flex-1 gap-2.5;
+  @apply mt-[clamp(0.75rem,3vh,2rem)] min-h-0 flex-1 auto-cols-[minmax(15rem,78vw)] grid-flow-col grid-rows-2 gap-2.5 overflow-x-auto pb-4 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+@media (width < 640px) {
+  .sdgs-page__grid {
+    @apply -mr-4 w-[calc(100%+1rem)];
+  }
+
+  .sdgs-page__header :deep(.page-header__description) {
+    @apply -mr-4 w-[calc(100%+1rem)];
+  }
+}
+
+@media (width >= 640px) {
+  .sdgs-page__grid {
+    @apply auto-cols-auto grid-flow-row grid-cols-4 grid-rows-5 overflow-hidden pb-0 pr-0;
+  }
+}
+
+@media (width >= 900px) {
+  .sdgs-page__grid {
+    @apply gap-2.5;
+
+    @apply grid-cols-6 grid-rows-3;
+  }
 }
 </style>

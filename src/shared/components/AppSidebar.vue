@@ -18,7 +18,7 @@ import { primaryNavigation, secondaryNavigation } from '@/shared/navigation/navi
         :key="item.label"
         :to="{ name: item.routeName }"
         class="sidebar__link"
-        active-class="--active"
+        exact-active-class="--active"
       >
         {{ item.label }}
       </RouterLink>

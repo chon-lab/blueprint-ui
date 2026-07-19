@@ -5,23 +5,24 @@ withDefaults(
   defineProps<{
     showCustomize?: boolean
     showRegister?: boolean
-    registerMenu?: boolean
   }>(),
   {
     showCustomize: true,
     showRegister: true,
-    registerMenu: false,
   },
 )
 </script>
 
 <template>
-  <Button variant="secondary" size="sm">Feedback</Button>
-  <Button v-if="showCustomize" variant="secondary" size="sm">Customizar</Button>
-  <Button v-if="showRegister" size="sm">
-    Registrar
-    <template v-if="registerMenu" #trailing>
-      <Icon name="chevron-down" :size="15" />
-    </template>
+  <Button variant="secondary">Feedback</Button>
+  <Button v-if="showCustomize" variant="secondary">Customizar</Button>
+  <slot name="before-create" />
+  <Button
+    v-if="showRegister"
+    icon-only
+    aria-label="Criar novo cadastro"
+    title="Criar novo cadastro"
+  >
+    <Icon name="plus" :size="18" />
   </Button>
 </template>

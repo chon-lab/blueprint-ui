@@ -5,7 +5,9 @@
         <slot name="title" />
       </h1>
       <div v-if="$slots.description" class="page-header__description">
-        <slot name="description" />
+        <div class="page-header__description-content">
+          <slot name="description" />
+        </div>
       </div>
     </div>
     <div v-if="$slots.actions" class="page-header__actions flex flex-wrap items-center">
@@ -30,7 +32,17 @@
 }
 
 .page-header__description {
-  @apply mt-2 line-clamp-2 max-w-[70rem] text-sm leading-5 text-muted sm:line-clamp-none;
+  @apply mt-2 max-w-[70rem] text-sm leading-5 text-muted;
+}
+
+@media (width < 640px) {
+  .page-header__description {
+    @apply min-h-10 overflow-x-auto pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  }
+
+  .page-header__description-content {
+    @apply min-h-10 w-[42rem] whitespace-normal;
+  }
 }
 
 .page-header__actions {

@@ -5,6 +5,10 @@ import type { OdsSummary } from '@/shared/domain/ods'
 export type EntityType = 'AGENCY' | 'COMPANY' | 'HOTEL' | 'MUNICIPALITY' | 'NGO' | 'OTHER'
 export type ActionRole = 'CONTRIBUTING_PARTNER' | 'IMPLEMENTATION_PARTNER' | 'OWNER'
 
+export interface AgentOdsSummary extends OdsSummary {
+  actionCount: number
+}
+
 export interface AgentListItem {
   id: string
   name: string
@@ -16,7 +20,7 @@ export interface AgentListItem {
   city: string
   cityLabel: string
   actionCount: number
-  ods: OdsSummary[]
+  ods: AgentOdsSummary[]
   roles: ActionRole[]
 }
 

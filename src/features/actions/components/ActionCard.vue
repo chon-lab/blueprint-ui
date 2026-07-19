@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { ActionImpactType, ActionListItem } from '../types/action.types'
 
-defineProps<{
+const props = defineProps<{
   action: ActionListItem
+  selectedOdsCodes: number[]
 }>()
 
 defineEmits<{
@@ -14,6 +16,12 @@ const impactLabels: Record<ActionImpactType, string> = {
   DIRECTLY_IMPACTS: 'Impacto direto',
   INDIRECTLY_IMPACTS: 'Impacto indireto',
 }
+
+const visibleOds = computed(() => {
+  if (props.selectedOdsCodes.length === 0) return props.action.relatedOds
+
+  return props.action.relatedOds.filter((ods) => props.selectedOdsCodes.includes(ods.code))
+})
 </script>
 
 <template>
@@ -32,12 +40,18 @@ const impactLabels: Record<ActionImpactType, string> = {
       <p class="action-card__owner">{{ action.ownerName }}</p>
     </div>
 
-    <span
-      class="action-card__ods"
-      :style="{ backgroundColor: action.ods.softColor, color: action.ods.color }"
-    >
-      {{ action.ods.title }}
-    </span>
+    <div class="action-card__ods-list flex flex-wrap items-center">
+      <span
+        v-for="ods in visibleOds"
+        :key="ods.code"
+        class="action-card__ods inline-flex items-center justify-center"
+        :style="{ '--ods-soft-color': ods.softColor, '--ods-color': ods.color }"
+        :title="`ODS ${ods.code}: ${ods.title}`"
+        :aria-label="`ODS ${ods.code}: ${ods.title}`"
+      >
+        {{ ods.code }}
+      </span>
+    </div>
   </button>
 </template>
 
@@ -53,7 +67,7 @@ const impactLabels: Record<ActionImpactType, string> = {
 }
 
 .action-card__content {
-  @apply mt-auto pt-5;
+  @apply mt-auto;
 }
 
 .action-card__title {
@@ -64,7 +78,14 @@ const impactLabels: Record<ActionImpactType, string> = {
   @apply mt-2 truncate text-sm leading-5 text-muted;
 }
 
+.action-card__ods-list {
+  @apply mt-auto gap-2;
+}
+
 .action-card__ods {
-  @apply mt-auto w-fit max-w-full truncate rounded-full px-3 py-1.5 text-xs font-normal leading-none;
+  @apply size-7 rounded-full text-xs font-medium leading-none;
+
+  background-color: var(--ods-soft-color);
+  color: color-mix(in srgb, var(--ods-color) 80%, black);
 }
 </style>

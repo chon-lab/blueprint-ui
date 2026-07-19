@@ -9,6 +9,7 @@ interface Props {
   disabled?: boolean
   loading?: boolean
   block?: boolean
+  iconOnly?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   loading: false,
   block: false,
+  iconOnly: false,
 })
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -39,6 +41,7 @@ const classes = computed(() => [
   variantClasses[props.variant],
   sizeClasses[props.size],
   props.block ? '--block' : '--fit',
+  props.iconOnly && '--icon-only',
 ])
 </script>
 
@@ -107,6 +110,22 @@ const classes = computed(() => [
 
 .button.--fit {
   @apply w-fit;
+}
+
+.button.--icon-only {
+  @apply px-0;
+}
+
+.button.--icon-only.--sm {
+  @apply w-[var(--bp-button-height-sm)];
+}
+
+.button.--icon-only.--md {
+  @apply w-[var(--bp-button-height-md)];
+}
+
+.button.--icon-only.--lg {
+  @apply w-[var(--bp-button-height-lg)];
 }
 
 .button__loading {

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import AppSidebar from '@/shared/components/AppSidebar.vue'
 import MobileHeader from '@/shared/components/MobileHeader.vue'
+import { isSearchModeActive } from '@/shared/composables/useSearchMode'
 </script>
 
 <template>
   <div class="app-layout lg:grid">
     <AppSidebar />
     <div class="app-content flex flex-col">
-      <MobileHeader />
+      <MobileHeader v-if="!isSearchModeActive" />
       <main class="app-main">
         <RouterView />
       </main>
@@ -27,6 +28,6 @@ import MobileHeader from '@/shared/components/MobileHeader.vue'
 }
 
 .app-main {
-  @apply min-h-0 flex-1 overflow-hidden px-4 py-[clamp(1rem,3.8vh,2.5rem)] sm:px-6 lg:px-0 lg:pr-10;
+  @apply min-h-0 flex-1 overflow-visible px-4 pb-0 pt-[clamp(1rem,3.8vh,2.5rem)] sm:px-6 lg:overflow-hidden lg:px-0 lg:py-[clamp(1rem,3.8vh,2.5rem)] lg:pr-10;
 }
 </style>

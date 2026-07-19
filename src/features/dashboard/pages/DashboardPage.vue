@@ -52,7 +52,7 @@ const {
     <PageHeader>
       <template #title>In&iacute;cio</template>
       <template #actions>
-        <HeaderActions register-menu />
+        <HeaderActions />
       </template>
     </PageHeader>
 

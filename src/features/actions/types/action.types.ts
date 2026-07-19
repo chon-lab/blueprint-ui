@@ -15,7 +15,7 @@ export interface ActionListItem {
   region: string
   state: string
   city: string
-  ods: OdsSummary
+  relatedOds: OdsSummary[]
 }
 
 export interface ActionsPageData {

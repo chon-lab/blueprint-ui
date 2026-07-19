@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { AgentListItem } from '../types/agent.types'
 
-defineProps<{
+const props = defineProps<{
   agent: AgentListItem
+  selectedOdsCodes: number[]
 }>()
 
 defineEmits<{
   select: [id: string]
 }>()
+
+const filteredOds = computed(() =>
+  props.agent.ods.filter((ods) => props.selectedOdsCodes.includes(ods.code)),
+)
 </script>
 
 <template>
@@ -35,13 +41,13 @@ defineEmits<{
         {{ agent.actionCount }} a&ccedil;&otilde;es
       </span>
       <span
-        v-for="ods in agent.ods"
+        v-for="ods in filteredOds"
         :key="ods.code"
-        class="agent-card__ods flex items-center justify-center"
-        :style="{ backgroundColor: ods.softColor, color: ods.color }"
-        :title="ods.title"
+        class="agent-card__ods inline-flex items-center justify-center"
+        :style="{ '--ods-soft-color': ods.softColor, '--ods-color': ods.color }"
+        :title="`${ods.title}: ${ods.actionCount} acoes`"
       >
-        {{ ods.code }}
+        {{ ods.actionCount }}
       </span>
     </div>
   </button>
@@ -84,5 +90,8 @@ defineEmits<{
 
 .agent-card__ods {
   @apply size-7 rounded-full text-xs font-medium;
+
+  background-color: var(--ods-soft-color);
+  color: color-mix(in srgb, var(--ods-color) 80%, black);
 }
 </style>

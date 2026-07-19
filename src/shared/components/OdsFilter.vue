@@ -29,21 +29,34 @@ function toggle(code: number) {
   emit('update:modelValue', nextCodes)
 }
 
+function closeDropdown() {
+  isOpen.value = false
+
+  const activeElement = document.activeElement as HTMLElement | null
+  if (root.value?.contains(activeElement)) activeElement?.blur()
+}
+
 function closeOnOutsideClick(event: PointerEvent) {
-  if (!root.value?.contains(event.target as Node)) isOpen.value = false
+  if (!root.value?.contains(event.target as Node)) closeDropdown()
+}
+
+function closeOnOutsideFocus(event: FocusEvent) {
+  if (!root.value?.contains(event.target as Node)) closeDropdown()
 }
 
 function closeOnEscape(event: KeyboardEvent) {
-  if (event.key === 'Escape') isOpen.value = false
+  if (event.key === 'Escape') closeDropdown()
 }
 
 onMounted(() => {
-  document.addEventListener('pointerdown', closeOnOutsideClick)
+  document.addEventListener('pointerdown', closeOnOutsideClick, true)
+  document.addEventListener('focusin', closeOnOutsideFocus)
   document.addEventListener('keydown', closeOnEscape)
 })
 
 onBeforeUnmount(() => {
-  document.removeEventListener('pointerdown', closeOnOutsideClick)
+  document.removeEventListener('pointerdown', closeOnOutsideClick, true)
+  document.removeEventListener('focusin', closeOnOutsideFocus)
   document.removeEventListener('keydown', closeOnEscape)
 })
 </script>
@@ -124,7 +137,7 @@ onBeforeUnmount(() => {
 }
 
 .ods-filter__selection {
-  @apply min-w-0 gap-2 py-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  @apply min-w-0 flex-1 gap-2 py-0.5 pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
 
 .ods-filter__chip {

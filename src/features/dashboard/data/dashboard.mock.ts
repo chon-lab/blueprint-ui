@@ -29,6 +29,10 @@ export const dashboardMock: DashboardData = {
         { id: 'ods-12', label: 'ODS 12', value: '39 a\u00e7\u00f5es' },
         { id: 'ods-17', label: 'ODS 17', value: '34 a\u00e7\u00f5es' },
         { id: 'ods-13', label: 'ODS 13', value: '22 a\u00e7\u00f5es' },
+        { id: 'ods-7', label: 'ODS 7', value: '19 a\u00e7\u00f5es' },
+        { id: 'ods-10', label: 'ODS 10', value: '17 a\u00e7\u00f5es' },
+        { id: 'ods-4', label: 'ODS 4', value: '15 a\u00e7\u00f5es' },
+        { id: 'ods-6', label: 'ODS 6', value: '11 a\u00e7\u00f5es' },
       ],
     },
     {
@@ -40,6 +44,9 @@ export const dashboardMock: DashboardData = {
         { id: 'turismo-verde', label: 'Instituto Turismo Verde', value: '21 a\u00e7\u00f5es' },
         { id: 'rio', label: 'Prefeitura Rio de Janeiro', value: '20 a\u00e7\u00f5es' },
         { id: 'fasano', label: 'Hotel Fasano', value: '3 a\u00e7\u00f5es' },
+        { id: 'tourism-ministry', label: 'Minist\u00e9rio do Turismo', value: '18 a\u00e7\u00f5es' },
+        { id: 'sebrae', label: 'Sebrae Nacional', value: '16 a\u00e7\u00f5es' },
+        { id: 'bahia', label: 'Governo da Bahia', value: '14 a\u00e7\u00f5es' },
       ],
     },
     {
