@@ -62,29 +62,4 @@ jobs:
           TAG="$(echo '${{ steps.meta.outputs.tags }}' | head -n 1)"
           echo "image=${TAG}" >> "$GITHUB_OUTPUT"
 
-  deploy:
-    name: Deploy to server
-    runs-on: self-hosted
-    needs: build-and-push
-    environment: production
 
-    steps:
-      - name: Deploy blueprint-ui service
-        shell: bash
-        run: |
-          set -e
-
-          stackName="${{ secrets.DEPLOY_STACK_NAME }}"
-          if [ -z "$stackName" ]; then
-            stackName="embratur-destinations"
-          fi
-
-          serviceName="${stackName}_blueprint-ui"
-          imageName="${{ needs.build-and-push.outputs.image }}"
-
-          GHCR_USER="${{ secrets.GHCR_USERNAME || github.actor }}"
-          GHCR_PASS="${{ secrets.GHCR_TOKEN || github.token }}"
-          echo "$GHCR_PASS" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
-
-          docker pull $imageName
-          docker service update --image $imageName --update-order stop-first --with-registry-auth $serviceName
