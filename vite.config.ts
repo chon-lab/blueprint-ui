@@ -5,7 +5,9 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/blueprint-ui/',
+  server: {
+    port: 9083,
+  },
   plugins: [
     vue(),
     tailwindcss(),

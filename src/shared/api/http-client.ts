@@ -75,4 +75,5 @@ class HttpClient {
   }
 }
 
-export const httpClient = new HttpClient(import.meta.env.VITE_API_BASE_URL ?? '/api')
+const baseUrl = (window as any)._env_?.VITE_API_BASE_URL ?? import.meta.env.VITE_API_BASE_URL ?? '/api'
+export const httpClient = new HttpClient(baseUrl)
